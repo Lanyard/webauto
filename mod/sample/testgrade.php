@@ -44,6 +44,7 @@ if ( isset($_POST['grade']) )  {
 
 		// We pass this in session because the sendGrade() function produces output
 		$_SESSION['gradetosend'] = $gradetosend;
+		$_SESSION['error'] = "Delete this when the grade is coming from the database!";
 	}
 
 	// Redirect to ourself with the session ID as a GET parameter.
