@@ -128,6 +128,7 @@ function initialize_map() {
 other_points = 
 <?php echo( json_encode($points));?> 
 ;
+
 other_names = 
 <?php echo( json_encode($names));?>
 ;
@@ -158,4 +159,5 @@ if ( isset($_SESSION['success']) ) {
 echo("<p>Here is the session information:\n<pre>\n");
 var_dump($_SESSION);
 echo("\n</pre>\n");
+
 ?>
