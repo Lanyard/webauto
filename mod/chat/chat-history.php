@@ -23,9 +23,11 @@
 
 	// Create the json
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		$messageTimeObj = new DateTime($row['message_time']);
+		$messageTime = $messageTimeObj->format('m/d h:i a');
 		$history [] = array(
 			'displayname' => $row['displayname'],
-			'messageTime' => $row['message_time'],
+			'messageTime' => $messageTime,
 			'message' => $row['message']
 		);
 	}

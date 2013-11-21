@@ -22,8 +22,8 @@
 	if( isset($_POST['chat-submit']) ) {
 	
 		// When a message is sent, update the session's chat history
-		if ( $_POST['chat-submit'] == "Chat" ) {
-			if( isset($_POST['message']) ) {
+		if ( $_POST['chat-submit'] == "Chat" && isset($_POST['message']) ) {
+			if( $_POST['message'] != '') {
 	
 				$stmt = $db->prepare("INSERT INTO {$p}chat (user_id, message, message_time)
 					VALUES (:UID, :MSG, NOW())");
@@ -49,7 +49,7 @@
 </head>
 <body>
 	<h1>Chatroom</h1>
-	<p><a href="<?php echo(sessionize('chat-history.php')); ?>">View JSON</a></p>
+	<p><strong>Chatting as:</strong> <?php echo htmlentities($LTI['user_displayname'])?></p>
 	<form method="post" action="index.php">
 		<input type="text" name="message" size="60" />
 		<input type="submit" name="chat-submit" value="Chat" />
@@ -81,7 +81,7 @@
 				}
 
 				$("#chat-content").html(historyHtml);
-				setTimeout('updateMsg()', 1000);
+				setTimeout('updateMsg()', 10000);
 
 			});
 
