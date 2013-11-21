@@ -19,15 +19,28 @@
 	// Set timezone for time-collection
 	date_default_timezone_set('America/New_York');
 
-	// When a message is sent, update the session's chat history
-	if( isset($_POST['message']) ) {
-
-		$stmt = $db->prepare("INSERT INTO {$p}chat (user_id, message, message_time)
-			VALUES (:UID, :MSG, NOW())");
-		$stmt->execute(array(
-			':UID' => $LTI['user_id'],
-			':MSG' => $_POST['message']
-		));
+	if( isset($_POST['chat-submit']) ) {
+	
+		// When a message is sent, update the session's chat history
+		if ( $_POST['chat-submit'] == "Chat" ) {
+			if( isset($_POST['message']) ) {
+	
+				$stmt = $db->prepare("INSERT INTO {$p}chat (user_id, message, message_time)
+					VALUES (:UID, :MSG, NOW())");
+				$stmt->execute(array(
+					':UID' => $LTI['user_id'],
+					':MSG' => $_POST['message']
+				));
+			}
+		}
+	
+		// If the instructor hit reset, clear the chat history
+		elseif ( $_POST['chat-submit'] == "Reset" ) {
+			$stmt = $db->prepare("TRUNCATE TABLE {$p}chat");
+			$stmt->execute();
+			header('Location: ' . sessionize('index.php'));
+			return;
+		}
 	}
 ?>
 <html>
@@ -39,7 +52,12 @@
 	<p><a href="<?php echo(sessionize('chat-history.php')); ?>">View JSON</a></p>
 	<form method="post" action="index.php">
 		<input type="text" name="message" size="60" />
-		<input type="submit" value="Chat" />
+		<input type="submit" name="chat-submit" value="Chat" />
+		<?php
+			if ($instructor === TRUE) {
+				echo '<input type="submit" name="chat-submit" value="Reset" />';
+			}
+		?>
 	</form>
 	<div id="chat-content">
 	</div>

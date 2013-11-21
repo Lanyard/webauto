@@ -19,7 +19,7 @@
 
 	// Retrieve chat history from the database
 	$stmt = $db->query("SELECT message, message_time, displayname FROM {$p}chat 
-	 JOIN {$p}lti_user ON {$p}chat.user_id = {$p}lti_user.user_id");
+	 JOIN {$p}lti_user ON {$p}chat.user_id = {$p}lti_user.user_id ORDER BY message_time ASC");
 
 	// Create the json
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
