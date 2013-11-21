@@ -11,3 +11,4 @@ solutions
 tmp
 config.php
 config-local.php
+setup.sql
