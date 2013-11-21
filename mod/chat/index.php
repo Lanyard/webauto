@@ -24,12 +24,19 @@
 		// When a message is sent, update the session's chat history
 		if ( $_POST['chat-submit'] == "Chat" && isset($_POST['message']) ) {
 			if( $_POST['message'] != '') {
-	
+
+				// Check post content for magic quotes setting before adding to the database
+				if ( get_magic_quotes_gpc() ) {
+						$message = stripslashes($_POST['message']);
+					} else {
+					$message = $_POST['message'];
+				}
+
 				$stmt = $db->prepare("INSERT INTO {$p}chat (user_id, message, message_time)
 					VALUES (:UID, :MSG, NOW())");
 				$stmt->execute(array(
 					':UID' => $LTI['user_id'],
-					':MSG' => $_POST['message']
+					':MSG' => $message
 				));
 			}
 		}
@@ -64,7 +71,7 @@
 	<script type="text/javascript">
 		//Equivalent of PHP's htmlentities for JavaScript
 		function htmlEntities(str) {
-		    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+		    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 		}
 
 		function updateMsg() {
