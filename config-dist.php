@@ -30,4 +30,4 @@ $CFG->analytics_name = false; // "dr-chuck.com";
 
 require_once $CFG->dirroot."/setup.php";
 
-// No trailing tag to avoid white space
+// No trailing tag to avoid any white space
