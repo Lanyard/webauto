@@ -17,30 +17,12 @@ if ( isset($_POST['grade']) )  {
 
 	// TODO: Use a SQL SELECT to retrieve the actual grade from webauto_lti_result
 	// The key is in the $_SESSION['lti']['result_id'];
-	$sql = "SELECT grade from webauto_lti_result
-			WHERE user_id = 1";
-	$stmt = $db->prepare($sql);
-	$stmt->execute(array(
-			':result_id' => $_SESSION['lti']['result_id']
-		)
-	);
-	$row = $stmt->fetch(PDO::FETCH_ASSOC); 
-
-	$oldgrade = $row['grade'];   // Replace this with the value from the DB
+	$oldgrade = 0.5;   // Replace this with the value from the DB
 	if ( $gradetosend < $oldgrade ) {
-		$_SESSION['error'] = "Grade lower than " . htmlentities($oldgrade * 100) . "% - not sent";
+		$_SESSION['error'] = "Grade lower than $oldgrade - not sent";
 	} else {
 		// TODO: Update the webauto_lti_result table with 
 		// the to be sent grade
-		$sql = "UPDATE webauto_lti_result
-			SET grade = :grade
-			WHERE result_id = :result_id";
-		$stmt = $db->prepare($sql);
-		$stmt->execute(array(
-				':grade' => $gradetosend,
-				':result_id' => $_SESSION['lti']['result_id']
-			)
-		);
 
 		// We pass this in session because the sendGrade() function produces output
 		$_SESSION['gradetosend'] = $gradetosend;
@@ -80,7 +62,7 @@ if ( isset($_SESSION['gradetosend']) ) {
 	// send the grade back to the LMS.
 	$retval = sendGrade(1.0);
 	if ( $retval === true ) {
-		success_out("Grade " . htmlentities($gradetosend * 100) . "% sent to server.");
+		success_out("Grade sent to server.");
 	} else if ( is_string($retval) ) {
 		error_out("Grade not sent: ".$retval);
 	} else {
