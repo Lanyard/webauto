@@ -21,22 +21,13 @@
 
 	// When a message is sent, update the session's chat history
 	if( isset($_POST['message']) ) {
-		$now = new DateTime();
-		if( !isset($_SESSION['history']) ) {
-			$_SESSION['history'] = array();
-		}
-		$_SESSION['history'] [] = array(
-			'message' => $_POST['message'],
-			'time' => $now->format('m/d, h:i a')
-		);
 
-		/*$stmt = $db->prepare("INSERT INTO $p{chat} (user_id, message, time)
-			VALUES (:UID, :MSG, :TIME)");
+		$stmt = $db->prepare("INSERT INTO {$p}chat (user_id, message, message_time)
+			VALUES (:UID, :MSG, NOW())");
 		$stmt->execute(array(
 			':UID' => $LTI['user_id'],
-			':MSG' => $_POST['message'],
-			':TIME' => $now->format('m/d, h:i a')
-		));*/
+			':MSG' => $_POST['message']
+		));
 	}
 ?>
 <html>
