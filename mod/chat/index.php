@@ -2,6 +2,7 @@
 	require_once "../../config.php";
 	require_once $CFG->dirroot."/db.php";
 	require_once $CFG->dirroot."/lib/lti_util.php";
+	require_once $CFG->dirroot."/lib/lms_lib.php";
 
 	session_start();
 
@@ -49,10 +50,9 @@
 			return;
 		}
 	}
+// View 
+headerContent();
 ?>
-<html>
-<head>
-	<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
 </head>
 <body>
 	<h1>Chatroom</h1>
@@ -68,6 +68,8 @@
 	</form>
 	<div id="chat-content">
 	</div>
+	<script src="<?php echo($CFG->staticroot); ?>/static/js/jquery-1.10.2.min.js"></script>
+    <script src="<?php echo($CFG->bootstrap); ?>/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		//Equivalent of PHP's htmlentities for JavaScript
 		function htmlEntities(str) {
@@ -94,7 +96,9 @@
 
 			console.log("History updated."); 
 		}
-		updateMsg();
+		$( document ).ready(function() {
+			updateMsg();
+		});
 	</script>
 </body>
 </html>

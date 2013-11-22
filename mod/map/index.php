@@ -2,6 +2,7 @@
 require_once "../../config.php";
 require_once $CFG->dirroot."/db.php";
 require_once $CFG->dirroot."/lib/lti_util.php";
+require_once $CFG->dirroot."/lib/lms_lib.php";
 
 session_start();
 
@@ -58,11 +59,8 @@ while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
         $points[] = array($row['lat']+0.0,$row['lng']+0.0);
   $names[] = array($row['displayname']);
 }
-
-?>
-<html><head><title>Map for 
-<?php echo($LTI['context_title']); ?>
-</title>
+// View
+headerContent() ?>
 <script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript">
 
@@ -153,3 +151,7 @@ if ( isset($_SESSION['success']) ) {
   <?php echo(' value="'.htmlent_utf8($lng).'" '); ?> >
  <button type="submit">Save Location</button>
 </form>
+    <script src="<?php echo($CFG->staticroot); ?>/static/js/jquery-1.10.2.min.js"></script>
+    <script src="<?php echo($CFG->bootstrap); ?>/js/bootstrap.min.js"></script>
+</body>
+</html>

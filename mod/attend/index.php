@@ -2,6 +2,7 @@
 require_once "../../config.php";
 require_once $CFG->dirroot."/db.php";
 require_once $CFG->dirroot."/lib/lti_util.php";
+require_once $CFG->dirroot."/lib/lms_lib.php";
 
 session_start();
 
@@ -54,8 +55,8 @@ if ( isset($_POST['code']) && $instructor ) {
 }
 
 // View 
+headerContent();
 ?>
-<html><head><title>Attendance tool</title>
 </head>
 <body style="background-color:orange;">
 <?php
@@ -112,3 +113,5 @@ if ( $instructor ) {
 	}
 	echo("</table>\n");
 }
+footerContent();
+?>
