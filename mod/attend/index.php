@@ -112,7 +112,3 @@ if ( $instructor ) {
 	}
 	echo("</table>\n");
 }
-
-echo("<p>Here is the session information:\n<pre>\n");
-var_dump($_SESSION);
-echo("\n</pre>\n");
