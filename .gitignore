@@ -11,4 +11,5 @@ solutions
 tmp
 config.php
 config-local.php
+config-server.php
 setup.sql
